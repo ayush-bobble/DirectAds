@@ -1,0 +1,6 @@
+appId: com.android.chrome
+---
+- inputText: ${WORD}
+# - inputText: gow
+- takeScreenshot: screenshot/${WORD}
+- eraseText

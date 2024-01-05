@@ -1,0 +1,7 @@
+appId: com.android.chrome
+---
+- launchApp
+- tapOn:
+    point: "43%,7%"
+- inputText: screenshot/${WORD}
+- eraseText

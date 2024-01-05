@@ -1,0 +1,6 @@
+appId: com.sec.android.app.samsungapps
+---
+- inputText: ${WORD}
+# - inputText: gow
+- takeScreenshot: screenshot/${WORD}
+- eraseText

@@ -1,0 +1,6 @@
+appId: com.android.vending
+---
+- inputText: ${WORD}
+# - inputText: gow
+- takeScreenshot: screenshot/${WORD}
+- eraseText

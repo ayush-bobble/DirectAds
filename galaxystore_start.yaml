@@ -1,0 +1,7 @@
+appId: com.sec.android.app.samsungapps
+---
+- launchApp
+- tapOn:
+    id: "com.sec.android.app.samsungapps:id/option_menu_search"
+- inputText: screenshot/${WORD}
+- eraseText

@@ -1,0 +1,7 @@
+appId: com.android.vending
+---
+- launchApp
+- tapOn:
+    point: "55%,7%"
+- inputText: screenshot/${WORD}
+- eraseText
