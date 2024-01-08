@@ -51,9 +51,9 @@ for i, word in enumerate(second_column_values):
     env_vars = ['-e', f'WORD={word}']
     if i == 0:
         # run the original script for the first env variable
-        subprocess.run(["maestro", "--device="+device,"test"] + env_vars + ["browser_start.yaml"])
+        subprocess.run(["/Users/mac/.maestro/bin/maestro", "--device="+device,"test"] + env_vars + ["browser_start.yaml"])
         print("Suggestion testing successful for the first env variable")
     else:
         # run a different script for the remaining env variables
-        subprocess.run(["maestro", "--device="+device,"test"] + env_vars + ["browser_type.yaml"])
+        subprocess.run(["/Users/mac/.maestro/bin/maestro", "--device="+device,"test"] + env_vars + ["browser_type.yaml"])
         print(f"Suggestion testing successful for env variable {i+1}")
