@@ -36,12 +36,12 @@ pipeline {
                     // Check if the file exists before proceeding
                     if (fileExists(csvFilePath)) {
                         echo "CSV file found: ${csvFilePath}"
+
+                        // Run the Python script
+                        sh "python3 ${env.WORKSPACE}/ads_keyword.py ${csvFilePath}"
                     } else {
                         error "CSV file not found: ${csvFilePath}"
                     }
-
-                    // Now you can use csvFilePath in your script
-                    sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
                 }
             }
         }
