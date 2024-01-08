@@ -23,23 +23,28 @@ pipeline {
             }
         }
 
-        stage('Run ads_keywords.py') {
-            steps {
-                script {
-                    // Set default CSV file if not provided
-                    def csvFileName = params.CSV_FILE ?: 'search_queries_with_categories.csv'
-                    def csvFilePath = "${env.WORKSPACE}"
+       
+stage('Run ads_keywords.py') {
+    steps {
+        script {
+            // Set default CSV file if not provided
+            def csvFileName = params.CSV_FILE ?: 'search_queries_with_categories.csv'
+            def csvFilePath = "${env.WORKSPACE}/${csvFileName}"
 
-                    // Debugging: Print CSV file path
-                    echo "CSV file path: ${csvFilePath}"
+            // Debugging: Print CSV file path
+            echo "CSV file path: ${csvFilePath}"
 
-                    // Navigate to the workspace before running the script
-                    dir(env.WORKSPACE) {
-                        // Your existing logic for CSV processing
-                        // ...
+            // Navigate to the workspace before running the script
+            dir(env.WORKSPACE) {
+                // Debugging: Print current working directory
+                echo "Current directory: ${pwd()}"
+                
+                // Your existing logic for CSV processing
+                // ...
 
-                        // Now you can use csvFilePath in your script
-                        sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
+                // Now you can use csvFilePath in your script
+                sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
+
                     }
                 }
             }
