@@ -2,9 +2,10 @@ import csv
 import chardet
 import subprocess
 import sys
+import os
 
 # Assuming 'CSV_FILE_PATH' is the parameter name you added in Jenkins
-filename = "search_queries_with_categories.csv"
+csv_file_path = os.getenv('CSV_FILE_PATH', 'search_queries_with_categories.csv')
 
 def detect_encoding(file_path):
     with open(file_path, 'rb') as f:
@@ -13,9 +14,9 @@ def detect_encoding(file_path):
 
 try:
     # Detect the file encoding
-    file_encoding = detect_encoding(filename)
+    file_encoding = detect_encoding(csv_file_path)
 
-    with open(filename, 'r', encoding=file_encoding) as rf:
+    with open(csv_file_path, 'r', encoding=file_encoding) as rf:
         reader = csv.reader(rf, delimiter=',')
         
         header = next(reader, None)
@@ -55,7 +56,7 @@ try:
 except UnicodeDecodeError:
     print("Error decoding the file. Try specifying a different encoding or manually inspect the file.")
 except FileNotFoundError:
-    print(f"File '{filename}' not found.")
+    print(f"File '{csv_file_path}' not found.")
 except IndexError:
     print("Index out of range. Make sure the second column exists in each row.")
 except Exception as e:
