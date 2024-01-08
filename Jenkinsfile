@@ -28,7 +28,7 @@ pipeline {
                 script {
                     // Set default CSV file if not provided
                     def csvFileName = params.CSV_FILE ?: 'search_queries_with_categories.csv'
-                    def csvFilePath = "${env.WORKSPACE}/${csvFileName}"
+                    def csvFilePath = "${env.WORKSPACE}"
 
                     // Debugging: Print CSV file path
                     echo "CSV file path: ${csvFilePath}"
