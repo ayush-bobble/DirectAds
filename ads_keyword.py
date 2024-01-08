@@ -5,7 +5,7 @@ import sys
 import os
 
 # Assuming 'CSV_FILE_PATH' is the parameter name you added in Jenkins
-csv_file_path = os.getenv('CSV_FILE_PATH', 'search_queries_with_categories.csv')
+csv_file_path = os.getenv('CSV_FILE', 'search_queries_with_categories.csv')
 
 def detect_encoding(file_path):
     with open(file_path, 'rb') as f:
