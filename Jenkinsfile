@@ -23,30 +23,25 @@ pipeline {
             }
         }
 
-       stage('Run ads_keywords.py') {
-    steps {
-        script {
-            // Set default CSV file if not provided
-            def csvFileName = params.CSV_FILE ?: 'search_queries_with_categories.csv'
-            def csvFilePath = "${env.WORKSPACE}/${csvFileName}"
+        stage('Run ads_keywords.py') {
+            steps {
+                script {
+                    // Set default CSV file if not provided
+                    def csvFileName = params.CSV_FILE ?: 'search_queries_with_categories.csv'
+                    def csvFilePath = "${env.WORKSPACE}/${csvFileName}"
 
-            // Debugging: Print CSV file path
-            echo "CSV file path: ${csvFilePath}"
+                    // Debugging: Print CSV file path
+                    echo "CSV file path: ${csvFilePath}"
 
-            // Debugging: Print current working directory
-            echo "Current directory: ${pwd()}"
-
-            // Check if the file exists before proceeding
-            if (fileExists(csvFilePath)) {
-                echo "CSV file found: ${csvFilePath}"
-            } else {
-                error "CSV file not found: ${csvFilePath}"
-            }
-
-            // Now you can use csvFilePath in your script
-            sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
-
+                    // Check if the file exists before proceeding
+                    if (fileExists(csvFilePath)) {
+                        echo "CSV file found: ${csvFilePath}"
+                    } else {
+                        error "CSV file not found: ${csvFilePath}"
                     }
+
+                    // Now you can use csvFilePath in your script
+                    sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
                 }
             }
         }
