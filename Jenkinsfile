@@ -23,8 +23,7 @@ pipeline {
             }
         }
 
-       
-stage('Run ads_keywords.py') {
+       stage('Run ads_keywords.py') {
     steps {
         script {
             // Set default CSV file if not provided
@@ -34,16 +33,18 @@ stage('Run ads_keywords.py') {
             // Debugging: Print CSV file path
             echo "CSV file path: ${csvFilePath}"
 
-            // Navigate to the workspace before running the script
-            dir(env.WORKSPACE) {
-                // Debugging: Print current working directory
-                echo "Current directory: ${pwd()}"
-                
-                // Your existing logic for CSV processing
-                // ...
+            // Debugging: Print current working directory
+            echo "Current directory: ${pwd()}"
 
-                // Now you can use csvFilePath in your script
-                sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
+            // Check if the file exists before proceeding
+            if (fileExists(csvFilePath)) {
+                echo "CSV file found: ${csvFilePath}"
+            } else {
+                error "CSV file not found: ${csvFilePath}"
+            }
+
+            // Now you can use csvFilePath in your script
+            sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
 
                     }
                 }
