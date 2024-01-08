@@ -3,6 +3,7 @@ import chardet
 import subprocess
 import sys
 
+# Assuming 'CSV_FILE_PATH' is the parameter name you added in Jenkins
 filename = "search_queries_with_categories.csv"
 
 def detect_encoding(file_path):
@@ -37,23 +38,25 @@ try:
         else:
             print("The CSV file does not have values in the second column.")
 
+    device = "RZ8M214NNBA"
+
+    # Prepare environment variables for maestro command
+    for i, word in enumerate(second_column_values):
+        env_vars = ['-e', f'WORD={word}']
+        if i == 0:
+            # run the original script for the first env variable
+            subprocess.run(["/Users/mac/.maestro/bin/maestro", "--device="+device, "test"] + env_vars + ["browser_start.yaml"])
+            print("Suggestion testing successful for the first env variable")
+        else:
+            # run a different script for the remaining env variables
+            subprocess.run(["/Users/mac/.maestro/bin/maestro", "--device="+device, "test"] + env_vars + ["browser_type.yaml"])
+            print(f"Suggestion testing successful for env variable {i+1}")
+
 except UnicodeDecodeError:
     print("Error decoding the file. Try specifying a different encoding or manually inspect the file.")
 except FileNotFoundError:
     print(f"File '{filename}' not found.")
 except IndexError:
     print("Index out of range. Make sure the second column exists in each row.")
-
-device = "RZ8M214NNBA"
-
-# Prepare environment variables for maestro command
-for i, word in enumerate(second_column_values):
-    env_vars = ['-e', f'WORD={word}']
-    if i == 0:
-        # run the original script for the first env variable
-        subprocess.run(["/Users/mac/.maestro/bin/maestro", "--device="+device,"test"] + env_vars + ["browser_start.yaml"])
-        print("Suggestion testing successful for the first env variable")
-    else:
-        # run a different script for the remaining env variables
-        subprocess.run(["/Users/mac/.maestro/bin/maestro", "--device="+device,"test"] + env_vars + ["browser_type.yaml"])
-        print(f"Suggestion testing successful for env variable {i+1}")
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
