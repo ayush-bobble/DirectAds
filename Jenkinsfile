@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        file(name: 'CSV_FILE', description: 'Upload your CSV file', defaultValue: 'search_queries_with_categories.csv')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -19,11 +23,18 @@ pipeline {
             }
         }
 
-
         stage('Run ads_keywords.py') {
             steps {
                 script {
-                    sh 'python3 ads_keyword.py'
+                    // Use the uploaded file in your script
+                    def csvFileName = params['CSV_FILE']
+                    def csvFilePath = env.WORKSPACE + '/' + csvFileName
+                    
+                    // Your existing logic for CSV processing
+                    // ...
+
+                    // Now you can use csvFilePath in your script
+                    sh "python3 ads_keyword.py --csv-file ${csvFilePath}"
                 }
             }
         }
