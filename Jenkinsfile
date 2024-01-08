@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        file(name: 'CSV_FILE', description: 'Upload your CSV file', defaultValue: 'search_queries_with_categories.csv')
+        file(name: 'CSV_FILE', description: 'Upload your CSV file')
     }
 
     stages {
@@ -26,8 +26,8 @@ pipeline {
         stage('Run ads_keywords.py') {
             steps {
                 script {
-                    // Use the uploaded file in your script
-                    def csvFileName = params['CSV_FILE']
+                    // Set default CSV file if not provided
+                    def csvFileName = params.CSV_FILE ?: 'search_queries_with_categories.csv'
                     def csvFilePath = env.WORKSPACE + '/' + csvFileName
                     
                     // Your existing logic for CSV processing
